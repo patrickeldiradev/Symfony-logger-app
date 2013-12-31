@@ -2,9 +2,10 @@
 
 namespace App\DTO\LogEntry;
 
+use App\DTO\AbstractTransfer;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class LogCountRequestTransfer
+class LogCountRequestTransfer extends AbstractTransfer
 {
     /**
      * @var array<string>|null

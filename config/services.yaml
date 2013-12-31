@@ -30,3 +30,8 @@ services:
     App\Scheduler\LogEntry\ImportLogsProvider:
         arguments:
             $logFilePath: '%log_file_path%'
+
+
+    App\EventListener\ValidationExceptionListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception', method: 'onKernelException' }
