@@ -63,7 +63,7 @@ class ImportLogsServiceTest extends KernelTestCase
     public function test_Execute_success(): void
     {
         // Ac
-        $logFilePath = dirname(__DIR__) . '/__data/logs.log';
+        $logFilePath = dirname(__DIR__) . '/_data/logs.log';
         $result = $this->service->execute($logFilePath);
 
         // Assert

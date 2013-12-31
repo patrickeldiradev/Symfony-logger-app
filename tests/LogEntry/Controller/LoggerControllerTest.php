@@ -247,7 +247,7 @@ class LoggerControllerTest extends WebTestCase
      */
     private function insertTestData(): void
     {
-        $filePath = dirname(__DIR__) . '/__data/logs.json';
+        $filePath = dirname(__DIR__) . '/_data/logs.json';
 
         if (!file_exists($filePath)) {
             throw new \Exception("File not found: $filePath");
