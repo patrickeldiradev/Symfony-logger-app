@@ -4,6 +4,7 @@ namespace App\Tests\Service;
 
 use App\Entity\LogEntry;
 use App\Service\ImportLogsService;
+use App\Service\ImportLogsServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -28,7 +29,7 @@ class ImportLogsServiceTest extends KernelTestCase
         self::bootKernel();
 
         $container = static::getContainer();
-        $this->service = $container->get(ImportLogsService::class);
+        $this->service = $container->get(ImportLogsServiceInterface::class);
         $this->entityManager = $container->get(EntityManagerInterface::class);
 
         $this->createSchema();

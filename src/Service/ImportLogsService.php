@@ -11,7 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Service class for importing logs from a file into the database.
  */
-class ImportLogsService
+class ImportLogsService implements ImportLogsServiceInterface
 {
     /**
      * @var EntityManagerInterface The entity manager instance.
