@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\LogEntry;
 
 use App\Entity\LogEntry;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Command\Command;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**

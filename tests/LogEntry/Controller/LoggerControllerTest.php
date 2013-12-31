@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\LogEntry\Controller;
 
 use App\Entity\LogEntry;
 use Doctrine\ORM\EntityManagerInterface;

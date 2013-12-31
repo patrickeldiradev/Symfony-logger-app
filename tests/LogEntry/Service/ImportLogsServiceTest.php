@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Tests\Service;
+namespace App\Tests\LogEntry\Service;
 
 use App\Entity\LogEntry;
-use App\Service\ImportLogsService;
-use App\Service\ImportLogsServiceInterface;
+use App\Service\LogEntry\ImportLogsServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

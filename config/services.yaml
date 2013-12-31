@@ -27,6 +27,6 @@ services:
     Symfony\Contracts\Translation\TranslatorInterface:
         alias: 'translator.default'
 
-    App\Scheduler\ImportLogsProvider:
+    App\Scheduler\LogEntry\ImportLogsProvider:
         arguments:
             $logFilePath: '%log_file_path%'

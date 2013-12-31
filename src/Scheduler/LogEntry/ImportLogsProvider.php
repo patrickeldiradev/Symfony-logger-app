@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Scheduler;
+namespace App\Scheduler\LogEntry;
 
-use App\Message\ImportLogsMessage;
+use App\Message\LogEntry\ImportLogsMessage;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Schedule;

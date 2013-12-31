@@ -1,11 +1,11 @@
 <?php
 
-namespace App\MessageHandler;
+namespace App\MessageHandler\LogEntry;
 
-use App\Message\ImportLogsMessage;
-use App\Service\ImportLogsServiceInterface;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use App\Message\LogEntry\ImportLogsMessage;
+use App\Service\LogEntry\ImportLogsServiceInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Throwable;
 
 /**

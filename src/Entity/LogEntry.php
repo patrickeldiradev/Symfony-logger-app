@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\LogEntryRepository;
+use App\Repository\LogEntry\LogEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LogEntryRepository::class)]

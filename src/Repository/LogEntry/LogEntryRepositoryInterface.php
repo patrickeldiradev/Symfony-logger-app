@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\LogEntry;
 
-use App\DTO\LogCountRequestTransfer;
+use App\DTO\LogEntry\LogCountRequestTransfer;
 
 interface LogEntryRepositoryInterface
 {

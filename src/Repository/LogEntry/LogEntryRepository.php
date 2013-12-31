@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\LogEntry;
 
-use App\DTO\LogCountRequestTransfer;
+use App\DTO\LogEntry\LogCountRequestTransfer;
 use App\Entity\LogEntry;
 use App\Pipeline\LogEntry\Filter\EndDateFilter;
 use App\Pipeline\LogEntry\Filter\ServiceNameFilter;

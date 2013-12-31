@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\LogEntry;
 
-use App\DTO\LogCountRequestTransfer;
-use App\Repository\LogEntryRepositoryInterface;
+use App\DTO\LogEntry\LogCountRequestTransfer;
+use App\Repository\LogEntry\LogEntryRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

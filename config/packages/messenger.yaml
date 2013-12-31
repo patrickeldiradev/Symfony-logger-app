@@ -12,7 +12,7 @@ framework:
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
-            'App\Message\ImportLogsMessage': async
+            'App\Message\LogEntry\ImportLogsMessage': async
 
 # when@test:
 #    framework:

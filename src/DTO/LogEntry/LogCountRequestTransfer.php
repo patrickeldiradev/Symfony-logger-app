@@ -1,9 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\LogEntry;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use DateTime;
 
 class LogCountRequestTransfer
 {
