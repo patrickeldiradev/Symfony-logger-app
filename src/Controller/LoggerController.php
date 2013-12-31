@@ -30,9 +30,10 @@ class LoggerController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return LogCountRequestTransfer
      */
-    private function getRequestTransfer(Request $request)
+    private function getRequestTransfer(Request $request): LogCountRequestTransfer
     {
         $requestTransfer = new LogCountRequestTransfer();
         $serviceNames = isset($request->query->all()['serviceNames']) ? $request->query->all()['serviceNames'] : [];
