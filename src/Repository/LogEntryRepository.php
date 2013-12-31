@@ -2,42 +2,53 @@
 
 namespace App\Repository;
 
+use App\DTO\LogCountRequestTransfer;
 use App\Entity\LogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<LogEntry>
- */
 class LogEntryRepository extends ServiceEntityRepository
 {
+    /**
+     * LogEntryRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LogEntry::class);
     }
 
-    //    /**
-    //     * @return LogEntry[] Returns an array of LogEntry objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('l.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @param LogCountRequestTransfer $requestTransfer
+     * @return int
+     */
+    public function countLogs(LogCountRequestTransfer $requestTransfer): int
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->select('COUNT(l)')
+            ->where('1 = 1');
 
-    //    public function findOneBySomeField($value): ?LogEntry
-    //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        // Add filters based on LogCountRequestTransfer properties
+        if ($requestTransfer->getServiceNames()) {
+            $qb->andWhere($qb->expr()->in('l.serviceName', ':serviceNames'))
+                ->setParameter('serviceNames', $requestTransfer->getServiceNames());
+        }
+
+        if ($requestTransfer->getStatusCode()) {
+            $qb->andWhere('l.statusCode = :statusCode')
+                ->setParameter('statusCode', $requestTransfer->getStatusCode());
+        }
+
+        if ($requestTransfer->getStartDate()) {
+            $qb->andWhere('l.timestamp >= :startDate')
+                ->setParameter('startDate', $requestTransfer->getStartDate());
+        }
+
+        if ($requestTransfer->getEndDate()) {
+            $qb->andWhere('l.timestamp <= :endDate')
+                ->setParameter('endDate', $requestTransfer->getEndDate());
+        }
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
