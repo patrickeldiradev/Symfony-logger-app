@@ -9,7 +9,7 @@ To install and run this project, follow these steps:
 1. Clone the repository to your local machine:
 
     ```bash
-    git git@github.com:ahmedelattar73/symfony_logger_app.git
+    git clone git@github.com:ahmedelattar73/symfony_logger_app.git
     ```
 
 2. Navigate to the project directory:
