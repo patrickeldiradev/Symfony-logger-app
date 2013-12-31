@@ -59,8 +59,7 @@ class ImportLogsService
         EntityManagerInterface $entityManager,
         LoggerInterface $logger,
         TranslatorInterface $translator,
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->logger = $logger;
         $this->translator = $translator;

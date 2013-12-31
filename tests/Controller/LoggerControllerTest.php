@@ -257,7 +257,6 @@ class LoggerControllerTest extends WebTestCase
         $logEntries = json_decode($jsonData, true);
 
         foreach ($logEntries as $logEntry) {
-
             $log = new LogEntry();
             $log->setUri($logEntry['uri']);
             $log->setHttpVersion($logEntry['httpVersion']);

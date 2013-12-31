@@ -11,8 +11,8 @@ use Symfony\Component\Console\Command\Command;
 
 class ImportLogsServiceTest extends KernelTestCase
 {
-    private  $service;
-    private  $entityManager;
+    private $service;
+    private $entityManager;
 
     /**
      * Sets up the environment before each test.
@@ -88,7 +88,6 @@ class ImportLogsServiceTest extends KernelTestCase
         try {
             $schemaTool->dropSchema($metadata);
         } catch (\Exception $e) {
-
         }
 
         $schemaTool->createSchema($metadata);

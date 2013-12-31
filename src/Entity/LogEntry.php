@@ -189,5 +189,4 @@ class LogEntry
     {
         $this->createdAt = $createdAt;
     }
-
 }

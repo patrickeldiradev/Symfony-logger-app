@@ -7,7 +7,7 @@
     <file>tests</file>
     <file>config</file>
 
-    <exclude-pattern>*.json</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
 
     <!-- Show progression -->
     <arg value="p"/>

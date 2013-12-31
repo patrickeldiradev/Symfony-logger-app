@@ -8,16 +8,16 @@ use DateTime;
 class LogCountRequestTransfer
 {
     #[Assert\All([
-        new Assert\NotBlank,
+        new Assert\NotBlank(),
         new Assert\Length(max: 100),
     ])]
     private ?array $serviceNames = null;
 
     #[
         Assert\Regex(
-        pattern: '/^\d{4}-\d{2}-\d{2}$/',
-        message: 'The start date must be in the format YYYY-MM-DD.'
-    ),
+            pattern: '/^\d{4}-\d{2}-\d{2}$/',
+            message: 'The start date must be in the format YYYY-MM-DD.'
+        ),
         Assert\Expression(
             "this.getStartDate() === null || this.getEndDate() === null || this.getStartDate() <= this.getEndDate()",
             message: "The start date must be before or equal to the end date."
