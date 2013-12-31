@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use \DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class LoggerController extends AbstractController
@@ -20,7 +19,7 @@ class LoggerController extends AbstractController
 
         $errors = $validator->validate($requestTransfer);
 
-        if (count($errors) > 0) {
+        if (count($errors)) {
             return $this->json(['errors' => (string)$errors], JsonResponse::HTTP_BAD_REQUEST);
         }
 
@@ -36,11 +35,8 @@ class LoggerController extends AbstractController
     private function getRequestTransfer(Request $request)
     {
         $requestTransfer = new LogCountRequestTransfer();
-
         $serviceNames = isset($request->query->all()['serviceNames']) ? $request->query->all()['serviceNames'] : [];
-
         $requestTransfer->setServiceNames($serviceNames);
-
 
         if ($startDate = $request->query->get('startDate')) {
             $requestTransfer->setStartDate($startDate);
