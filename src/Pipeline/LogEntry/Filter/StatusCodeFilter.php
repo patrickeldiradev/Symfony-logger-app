@@ -2,20 +2,24 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use App\DTO\LogEntry\LogCountRequestTransfer;
 use Doctrine\Common\Collections\Criteria;
 
-class StatusCodeFilter
+class StatusCodeFilter implements FilterInterface
 {
-    private ?int $statusCode;
+    /**
+     * @var LogCountRequestTransfer
+     */
+    private LogCountRequestTransfer $requestTransfer;
 
     /**
-     * StatusCodeFilter constructor.
+     * ServiceNameFilter constructor.
      *
-     * @param int|null $statusCode
+     * @param LogCountRequestTransfer $requestTransfer
      */
-    public function __construct(?int $statusCode)
+    public function __construct(LogCountRequestTransfer $requestTransfer)
     {
-        $this->statusCode = $statusCode;
+        $this->requestTransfer = $requestTransfer;
     }
 
     /**
@@ -26,8 +30,8 @@ class StatusCodeFilter
      */
     public function __invoke(Criteria $criteria): Criteria
     {
-        if ($this->statusCode !== null) {
-            $criteria->andWhere(Criteria::expr()->eq('statusCode', $this->statusCode));
+        if ($this->requestTransfer->getStatusCode() !== null) {
+            $criteria->andWhere(Criteria::expr()->eq('statusCode', $this->requestTransfer->getStatusCode()));
         }
 
         return $criteria;

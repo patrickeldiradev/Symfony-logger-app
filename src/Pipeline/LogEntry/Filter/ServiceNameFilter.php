@@ -2,24 +2,24 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use App\DTO\LogEntry\LogCountRequestTransfer;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\QueryBuilder;
 
-class ServiceNameFilter
+class ServiceNameFilter implements FilterInterface
 {
     /**
-     * @var array<string>
+     * @var LogCountRequestTransfer
      */
-    private array $serviceNames;
+    private LogCountRequestTransfer $requestTransfer;
 
     /**
      * ServiceNameFilter constructor.
      *
-     * @param array<string> $serviceNames
+     * @param LogCountRequestTransfer $requestTransfer
      */
-    public function __construct(array $serviceNames)
+    public function __construct(LogCountRequestTransfer $requestTransfer)
     {
-        $this->serviceNames = $serviceNames;
+        $this->requestTransfer = $requestTransfer;
     }
 
     /**
@@ -30,8 +30,11 @@ class ServiceNameFilter
      */
     public function __invoke(Criteria $criteria): Criteria
     {
-        if (!empty($this->serviceNames)) {
-            $criteria->andWhere(Criteria::expr()->in('serviceName', $this->serviceNames));
+        if (!empty($this->requestTransfer->getServiceNames())) {
+            $criteria->andWhere(Criteria::expr()->in(
+                'serviceName',
+                $this->requestTransfer->getServiceNames()
+            ));
         }
 
         return $criteria;

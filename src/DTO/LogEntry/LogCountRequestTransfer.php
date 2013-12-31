@@ -114,4 +114,18 @@ class LogCountRequestTransfer
     {
         $this->statusCode = $statusCode;
     }
+
+    /**
+     * @param array $data
+     * @return $this
+     */
+    public function fromArray(array $data): self
+    {
+        $this->setServiceNames($data['serviceNames'] ?? null);
+        $this->setStartDate($data['startDate'] ?? null);
+        $this->setEndDate($data['endDate'] ?? null);
+        $this->setStatusCode($data['statusCode'] ?? null);
+
+        return $this;
+    }
 }

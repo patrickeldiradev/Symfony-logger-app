@@ -2,25 +2,22 @@
 
 namespace App\Pipeline\LogEntry;
 
+use App\Pipeline\LogEntry\Filter\FilterInterface;
 use Doctrine\Common\Collections\Criteria;
 
-class LogFilterPipeline
+class LogFilterPipeline implements LogFilterPipelineInterface
 {
     /**
-     * @var array<callable>
+     * @var array<FilterInterface>
      */
-    private array $filters = [];
+    private array $filters;
 
     /**
-     * Adds a filter to the pipeline.
-     *
-     * @param callable $filter
-     * @return $this
+     * @param array<FilterInterface> $filters
      */
-    public function addFilter(callable $filter): self
+    public function __construct(array $filters = [])
     {
-        $this->filters[] = $filter;
-        return $this;
+        $this->filters = $filters;
     }
 
     /**

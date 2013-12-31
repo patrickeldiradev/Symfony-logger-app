@@ -18,7 +18,8 @@ class LoggerController extends AbstractController
         LogEntryRepositoryInterface $logEntryRepository,
         ValidatorInterface $validator
     ): JsonResponse {
-        $requestTransfer = $this->getRequestTransfer($request);
+
+        $requestTransfer = (new LogCountRequestTransfer())->fromArray($request->query->all());
 
         $errors = $validator->validate($requestTransfer);
 
@@ -29,30 +30,5 @@ class LoggerController extends AbstractController
         $count = $logEntryRepository->countLogs($requestTransfer);
 
         return $this->json(['count' => $count]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return LogCountRequestTransfer
-     */
-    private function getRequestTransfer(Request $request): LogCountRequestTransfer
-    {
-        $requestTransfer = new LogCountRequestTransfer();
-        $serviceNames = isset($request->query->all()['serviceNames']) ? $request->query->all()['serviceNames'] : [];
-        $requestTransfer->setServiceNames($serviceNames);
-
-        if ($startDate = $request->query->get('startDate')) {
-            $requestTransfer->setStartDate($startDate);
-        }
-
-        if ($endDate = $request->query->get('endDate')) {
-            $requestTransfer->setEndDate($endDate);
-        }
-
-        $statusCode = $request->query->getInt('statusCode');
-        $requestTransfer->setStatusCode($statusCode ?: null);
-
-        return $requestTransfer;
     }
 }

@@ -2,21 +2,24 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use App\DTO\LogEntry\LogCountRequestTransfer;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\QueryBuilder;
 
-class EndDateFilter
+class EndDateFilter implements FilterInterface
 {
-    private ?string $endDate;
+    /**
+     * @var LogCountRequestTransfer
+     */
+    private LogCountRequestTransfer $requestTransfer;
 
     /**
-     * EndDateFilter constructor.
+     * ServiceNameFilter constructor.
      *
-     * @param string|null $endDate
+     * @param LogCountRequestTransfer $requestTransfer
      */
-    public function __construct(?string $endDate)
+    public function __construct(LogCountRequestTransfer $requestTransfer)
     {
-        $this->endDate = $endDate;
+        $this->requestTransfer = $requestTransfer;
     }
 
     /**
@@ -28,8 +31,14 @@ class EndDateFilter
      */
     public function __invoke(Criteria $criteria): Criteria
     {
-        if ($this->endDate !== null) {
-            $criteria->andWhere(Criteria::expr()->lte('timestamp', new \DateTime($this->endDate)));
+        if ($this->requestTransfer->getEndDate() !== null) {
+            $criteria->andWhere(
+                Criteria::expr()
+                    ->lte(
+                        'timestamp',
+                        new \DateTime($this->requestTransfer->getEndDate())
+                    )
+            );
         }
 
         return $criteria;

@@ -2,21 +2,24 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use App\DTO\LogEntry\LogCountRequestTransfer;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\QueryBuilder;
 
-class StartDateFilter
+class StartDateFilter implements FilterInterface
 {
-    private ?string $startDate;
+    /**
+     * @var LogCountRequestTransfer
+     */
+    private LogCountRequestTransfer $requestTransfer;
 
     /**
-     * StartDateFilter constructor.
+     * ServiceNameFilter constructor.
      *
-     * @param string|null $startDate
+     * @param LogCountRequestTransfer $requestTransfer
      */
-    public function __construct(?string $startDate)
+    public function __construct(LogCountRequestTransfer $requestTransfer)
     {
-        $this->startDate = $startDate;
+        $this->requestTransfer = $requestTransfer;
     }
 
     /**
@@ -28,8 +31,14 @@ class StartDateFilter
      */
     public function __invoke(Criteria $criteria): Criteria
     {
-        if ($this->startDate !== null) {
-            $criteria->andWhere(Criteria::expr()->gte('timestamp', new \DateTime($this->startDate)));
+        if ($this->requestTransfer->getStartDate() !== null) {
+            $criteria->andWhere(
+                Criteria::expr()
+                    ->gte(
+                        'timestamp',
+                        new \DateTime($this->requestTransfer->getStartDate())
+                    )
+            );
         }
 
         return $criteria;
