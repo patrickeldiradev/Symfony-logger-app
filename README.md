@@ -51,5 +51,14 @@ To get the logs count, send a GET request to the `/count` endpoint with the foll
 
 ```json
 {
+   "count": 0
 }
+```
+
+### Run Tests
+
+To get the logs count, send a GET request to the `/count` endpoint with the following JSON payload:
+
+```json
+docker-compose exec app bin/phpunit
 ```
