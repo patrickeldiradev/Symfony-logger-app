@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Tests\Feature;
+namespace App\Tests\Controller;
 
-use App\Tests\BaseTest;
+use App\Entity\LogEntry;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -10,16 +14,35 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * Tests for the LoggerController.
  */
-class LoggerControllerTest extends BaseTest
+class LoggerControllerTest extends WebTestCase
 {
     /**
-     * Set up the environment before each test.
-     *
+     * @var KernelBrowser
+     */
+    protected KernelBrowser $client;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    protected EntityManagerInterface $entityManager;
+
+    /**
+     * Sets up the environment before each test.
      * @throws \Exception
      */
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->client = static::createClient();
+        $container = self::getContainer();
+
+        $this->entityManager = $container->get(EntityManagerInterface::class);
+
+        // Ensure schema creation
+        $this->createSchema();
+
+        $this->insertTestData();
     }
 
     /**
@@ -186,5 +209,67 @@ class LoggerControllerTest extends BaseTest
         // Assert
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $status_code);
         $this->assertArrayHasKey('errors', $response_data);
+    }
+
+
+
+
+    /**
+     * Creates the database schema.
+     */
+    private function createSchema(): void
+    {
+        $schemaTool = new SchemaTool($this->entityManager);
+        $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
+
+        try {
+            $schemaTool->dropSchema($metadata);
+        } catch (\Exception $e) {
+            // Ignore errors if schema does not exist
+        }
+
+        $schemaTool->createSchema($metadata);
+    }
+
+    /**
+     * Cleans up the environment after each test.
+     */
+    protected function tearDown(): void
+    {
+        $this->entityManager->close();
+        parent::tearDown();
+    }
+
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    private function insertTestData(): void
+    {
+        $filePath = dirname(__DIR__) . '/__data/logs.json';
+
+        if (!file_exists($filePath)) {
+            throw new \Exception("File not found: $filePath");
+        }
+
+        $jsonData = file_get_contents($filePath);
+        $logEntries = json_decode($jsonData, true);
+
+        foreach ($logEntries as $logEntry) {
+
+            $log = new LogEntry();
+            $log->setUri($logEntry['uri']);
+            $log->setHttpVersion($logEntry['httpVersion']);
+            $log->setHttpMethod($logEntry['httpMethod']);
+            $log->setStatusCode($logEntry['statusCode']);
+            $log->setLinePosition($logEntry['linePosition']);
+            $log->setTimestamp(new \DateTime($logEntry['timestamp']));
+            $log->setServiceName($logEntry['serviceName']);
+
+            $this->entityManager->persist($log);
+        }
+
+        $this->entityManager->flush();
     }
 }
