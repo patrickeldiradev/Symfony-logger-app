@@ -13,8 +13,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class LoggerController extends AbstractController
 {
     #[Route('/count')]
-    public function countAction(Request $request, LogEntryRepository $logEntryRepository, ValidatorInterface $validator): JsonResponse
-    {
+    public function countAction(
+        Request $request,
+        LogEntryRepository $logEntryRepository,
+        ValidatorInterface $validator
+    ): JsonResponse {
         $requestTransfer = $this->getRequestTransfer($request);
 
         $errors = $validator->validate($requestTransfer);

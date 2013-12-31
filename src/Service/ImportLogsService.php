@@ -155,7 +155,7 @@ class ImportLogsService
         preg_match(self::LINE_EXPRESSION, $line, $matches);
 
         $logEntry = new LogEntry();
-        $logEntry->setServiceName(trim($matches[1]) ?? '');
+        $logEntry->setServiceName(! empty(trim($matches[1])) ? trim($matches[1]) : '');
         $logEntry->setTimestamp(isset($matches[2]) ? new \DateTime($matches[2]) : new \DateTime());
         $logEntry->setHttpMethod($matches[3] ?? '');
         $logEntry->setUri($matches[4] ?? '');

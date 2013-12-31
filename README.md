@@ -44,13 +44,31 @@ To install and run this project, follow these steps:
       docker-compose exec app php bin/console messenger:consume scheduler_watchlogs -vv
     ```
 
-### Run Tests
 
-0. To get the logs count, send a GET request to the `/count` endpoint with the following JSON payload:
+
+
+### Run Code Quality Checks (Tests - PHP_CodeSniffer - PHPStan)
+
+To run the code quality checks, follow these steps:
+
+1. Run PHPUnit tests:
 
     ```bash
     docker-compose exec app bin/phpunit
     ```
+
+2. Run PHP_CodeSniffer:
+
+    ```bash
+    docker-compose exec app php ./vendor/bin/phpcs
+    ```
+
+3. Run PHPStan:
+
+    ```bash
+    docker-compose exec app vendor/bin/phpstan analyse
+    ```
+
 
 ### API Documentation
 
