@@ -24,9 +24,15 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Service\ImportLogsServiceInterface: '@App\Service\ImportLogsService'
+    App\Service\ImportLogsServiceInterface:
+        alias: App\Service\ImportLogsService
+
+    App\Repository\LogEntryRepositoryInterface:
+        alias: App\Repository\LogEntryRepository
+
     Symfony\Contracts\Translation\TranslatorInterface:
         alias: 'translator.default'
+
     App\Scheduler\ImportLogsProvider:
         arguments:
             $logFilePath: '%log_file_path%'

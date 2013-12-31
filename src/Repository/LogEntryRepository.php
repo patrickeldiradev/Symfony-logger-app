@@ -7,7 +7,7 @@ use App\Entity\LogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class LogEntryRepository extends ServiceEntityRepository
+class LogEntryRepository extends ServiceEntityRepository implements LogEntryRepositoryInterface
 {
     /**
      * LogEntryRepository constructor.

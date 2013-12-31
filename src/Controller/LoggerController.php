@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\DTO\LogCountRequestTransfer;
-use App\Repository\LogEntryRepository;
+use App\Repository\LogEntryRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ class LoggerController extends AbstractController
     #[Route('/count')]
     public function countAction(
         Request $request,
-        LogEntryRepository $logEntryRepository,
+        LogEntryRepositoryInterface $logEntryRepository,
         ValidatorInterface $validator
     ): JsonResponse {
         $requestTransfer = $this->getRequestTransfer($request);
