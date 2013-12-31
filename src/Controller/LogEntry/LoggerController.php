@@ -2,6 +2,7 @@
 
 namespace App\Controller\LogEntry;
 
+use App\Controller\BaseController;
 use App\DTO\LogEntry\LogCountRequestTransfer;
 use App\Exception\ValidationException;
 use App\Repository\LogEntry\LogEntryRepositoryInterface;

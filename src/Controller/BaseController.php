@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\LogEntry;
+namespace App\Controller;
 
 use App\DTO\AbstractTransfer;
 use App\Exception\ValidationException;
