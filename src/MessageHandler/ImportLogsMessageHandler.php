@@ -3,7 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Message\ImportLogsMessage;
-use App\Service\ImportLogsService;
+use App\Service\ImportLogsServiceInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -15,9 +15,9 @@ use Throwable;
 class ImportLogsMessageHandler
 {
     /**
-     * @var ImportLogsService The service responsible for importing logs.
+     * @var ImportLogsServiceInterface The service responsible for importing logs.
      */
-    private ImportLogsService $importLogsService;
+    private ImportLogsServiceInterface $importLogsService;
 
     /**
      * @var LoggerInterface The logger for logging errors.
@@ -27,10 +27,10 @@ class ImportLogsMessageHandler
     /**
      * Constructor.
      *
-     * @param ImportLogsService $importLogsService The service responsible for importing logs.
+     * @param ImportLogsServiceInterface $importLogsService The service responsible for importing logs.
      * @param LoggerInterface $logger The logger for logging errors.
      */
-    public function __construct(ImportLogsService $importLogsService, LoggerInterface $logger)
+    public function __construct(ImportLogsServiceInterface $importLogsService, LoggerInterface $logger)
     {
         $this->importLogsService = $importLogsService;
         $this->logger = $logger;
