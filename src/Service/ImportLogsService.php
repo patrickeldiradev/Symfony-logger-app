@@ -34,7 +34,7 @@ class ImportLogsService
     private const READ_MODE = 'r';
 
     /**
-     * @var array The batch of log entries to process and save.
+     * @var array<LogEntry> The batch of log entries to process and save.
      */
     private array $batch = [];
 
@@ -160,7 +160,7 @@ class ImportLogsService
         $logEntry->setHttpMethod($matches[3] ?? '');
         $logEntry->setUri($matches[4] ?? '');
         $logEntry->setHttpVersion($matches[5] ?? '');
-        $logEntry->setStatusCode($matches[6] ?? null);
+        $logEntry->setStatusCode(! empty($matches[6]) ? (int)$matches[6] : null);
         $logEntry->setLinePosition($lastPosition);
 
         return $logEntry;

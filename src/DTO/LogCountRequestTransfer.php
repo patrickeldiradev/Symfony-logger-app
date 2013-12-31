@@ -7,6 +7,9 @@ use DateTime;
 
 class LogCountRequestTransfer
 {
+    /**
+     * @var array<string>|null
+     */
     #[Assert\All([
         new Assert\NotBlank(),
         new Assert\Length(max: 100),
@@ -50,7 +53,7 @@ class LogCountRequestTransfer
     private ?int $statusCode = null;
 
     /**
-     * @return array|null
+     * @return array<string>|null
      */
     public function getServiceNames(): ?array
     {
@@ -58,7 +61,7 @@ class LogCountRequestTransfer
     }
 
     /**
-     * @param array|null $serviceNames
+     * @param array<string>|null $serviceNames
      */
     public function setServiceNames(?array $serviceNames): void
     {
