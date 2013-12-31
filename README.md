@@ -47,7 +47,7 @@ To install and run this project, follow these steps:
 
 
 
-### Run Code Quality Checks (Tests - PHP_CodeSniffer - PHPStan)
+## Run Code Quality Checks (Tests - PHP_CodeSniffer - PHPStan)
 
 To run the code quality checks, follow these steps:
 
@@ -70,7 +70,7 @@ To run the code quality checks, follow these steps:
     ```
 
 
-### API Documentation
+## API Documentation
 
 #### GET /count
 
