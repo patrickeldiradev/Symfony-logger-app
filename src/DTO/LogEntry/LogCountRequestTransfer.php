@@ -116,7 +116,7 @@ class LogCountRequestTransfer
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      * @return $this
      */
     public function fromArray(array $data): self
