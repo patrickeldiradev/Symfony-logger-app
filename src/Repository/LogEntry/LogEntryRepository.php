@@ -10,8 +10,12 @@ use App\Pipeline\LogEntry\Filter\StartDateFilter;
 use App\Pipeline\LogEntry\Filter\StatusCodeFilter;
 use App\Pipeline\LogEntry\LogFilterPipeline;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<LogEntry>
+ */
 class LogEntryRepository extends ServiceEntityRepository implements LogEntryRepositoryInterface
 {
     /**
@@ -29,9 +33,7 @@ class LogEntryRepository extends ServiceEntityRepository implements LogEntryRepo
      */
     public function countLogs(LogCountRequestTransfer $requestTransfer): int
     {
-        $qb = $this->createQueryBuilder('l')
-            ->select('COUNT(l)');
-
+        $criteria = Criteria::create();
         $pipeline = new LogFilterPipeline();
 
         $pipeline->addFilter(new ServiceNameFilter($requestTransfer->getServiceNames()))
@@ -39,8 +41,9 @@ class LogEntryRepository extends ServiceEntityRepository implements LogEntryRepo
             ->addFilter(new StartDateFilter($requestTransfer->getStartDate()))
             ->addFilter(new EndDateFilter($requestTransfer->getEndDate()));
 
-        $qb = $pipeline->apply($qb);
+        $criteria = $pipeline->apply($criteria);
+        $logs = $this->matching($criteria);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return $logs->count();
     }
 }

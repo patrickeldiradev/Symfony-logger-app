@@ -2,16 +2,16 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 
 class StartDateFilter
 {
-    /**
-     * @var string|null
-     */
     private ?string $startDate;
 
     /**
+     * StartDateFilter constructor.
+     *
      * @param string|null $startDate
      */
     public function __construct(?string $startDate)
@@ -20,16 +20,18 @@ class StartDateFilter
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
+     * Invokes the filter to add a start date condition to the Criteria object.
+     *
+     * @param Criteria $criteria
+     * @return Criteria
+     * @throws \Exception
      */
-    public function __invoke(QueryBuilder $qb): QueryBuilder
+    public function __invoke(Criteria $criteria): Criteria
     {
         if ($this->startDate !== null) {
-            $qb->andWhere('l.timestamp >= :startDate')
-                ->setParameter('startDate', $this->startDate);
+            $criteria->andWhere(Criteria::expr()->gte('timestamp', new \DateTime($this->startDate)));
         }
 
-        return $qb;
+        return $criteria;
     }
 }

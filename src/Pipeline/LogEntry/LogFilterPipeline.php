@@ -2,16 +2,18 @@
 
 namespace App\Pipeline\LogEntry;
 
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\Common\Collections\Criteria;
 
 class LogFilterPipeline
 {
     /**
-     * @var array
+     * @var array<callable>
      */
     private array $filters = [];
 
     /**
+     * Adds a filter to the pipeline.
+     *
      * @param callable $filter
      * @return $this
      */
@@ -22,15 +24,17 @@ class LogFilterPipeline
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
+     * Applies all filters in the pipeline to the given Criteria object.
+     *
+     * @param Criteria $criteria
+     * @return Criteria
      */
-    public function apply(QueryBuilder $qb): QueryBuilder
+    public function apply(Criteria $criteria): Criteria
     {
         foreach ($this->filters as $filter) {
-            $qb = $filter($qb);
+            $criteria = $filter($criteria);
         }
 
-        return $qb;
+        return $criteria;
     }
 }

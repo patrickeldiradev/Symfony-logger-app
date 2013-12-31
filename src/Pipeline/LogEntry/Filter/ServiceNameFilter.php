@@ -2,17 +2,20 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 
 class ServiceNameFilter
 {
     /**
-     * @var array
+     * @var array<string>
      */
     private array $serviceNames;
 
     /**
-     * @param array $serviceNames
+     * ServiceNameFilter constructor.
+     *
+     * @param array<string> $serviceNames
      */
     public function __construct(array $serviceNames)
     {
@@ -20,16 +23,17 @@ class ServiceNameFilter
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
+     * Invokes the filter to add a service name condition to the Criteria object.
+     *
+     * @param Criteria $criteria
+     * @return Criteria
      */
-    public function __invoke(QueryBuilder $qb): QueryBuilder
+    public function __invoke(Criteria $criteria): Criteria
     {
         if (!empty($this->serviceNames)) {
-            $qb->andWhere($qb->expr()->in('l.serviceName', ':serviceNames'))
-                ->setParameter('serviceNames', $this->serviceNames);
+            $criteria->andWhere(Criteria::expr()->in('serviceName', $this->serviceNames));
         }
 
-        return $qb;
+        return $criteria;
     }
 }

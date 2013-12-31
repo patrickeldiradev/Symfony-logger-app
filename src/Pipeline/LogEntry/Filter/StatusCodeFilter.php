@@ -2,16 +2,15 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\Common\Collections\Criteria;
 
 class StatusCodeFilter
 {
-    /**
-     * @var int|null
-     */
     private ?int $statusCode;
 
     /**
+     * StatusCodeFilter constructor.
+     *
      * @param int|null $statusCode
      */
     public function __construct(?int $statusCode)
@@ -20,16 +19,17 @@ class StatusCodeFilter
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
+     * Invokes the filter to add a status code condition to the Criteria object.
+     *
+     * @param Criteria $criteria
+     * @return Criteria
      */
-    public function __invoke(QueryBuilder $qb): QueryBuilder
+    public function __invoke(Criteria $criteria): Criteria
     {
         if ($this->statusCode !== null) {
-            $qb->andWhere('l.statusCode = :statusCode')
-                ->setParameter('statusCode', $this->statusCode);
+            $criteria->andWhere(Criteria::expr()->eq('statusCode', $this->statusCode));
         }
 
-        return $qb;
+        return $criteria;
     }
 }

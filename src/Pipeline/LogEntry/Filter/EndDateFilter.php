@@ -2,16 +2,16 @@
 
 namespace App\Pipeline\LogEntry\Filter;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 
 class EndDateFilter
 {
-    /**
-     * @var string|null
-     */
     private ?string $endDate;
 
     /**
+     * EndDateFilter constructor.
+     *
      * @param string|null $endDate
      */
     public function __construct(?string $endDate)
@@ -20,16 +20,18 @@ class EndDateFilter
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
+     * Invokes the filter to add an end date condition to the Criteria object.
+     *
+     * @param Criteria $criteria
+     * @return Criteria
+     * @throws \Exception
      */
-    public function __invoke(QueryBuilder $qb): QueryBuilder
+    public function __invoke(Criteria $criteria): Criteria
     {
         if ($this->endDate !== null) {
-            $qb->andWhere('l.timestamp <= :endDate')
-                ->setParameter('endDate', $this->endDate);
+            $criteria->andWhere(Criteria::expr()->lte('timestamp', new \DateTime($this->endDate)));
         }
 
-        return $qb;
+        return $criteria;
     }
 }
