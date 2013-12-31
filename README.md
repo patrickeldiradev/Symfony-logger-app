@@ -47,7 +47,7 @@ To install and run this project, follow these steps:
 
 ### Request Details
 
-To get the logs count, send a GET request to the `/api/logs/count` endpoint with the following JSON payload:
+To get the logs count, send a GET request to the `/count` endpoint with the following JSON payload:
 
 ```json
 {

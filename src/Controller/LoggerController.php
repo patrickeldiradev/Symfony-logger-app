@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LoggerController extends AbstractController
 {
-    #[Route('/logs/count')]
+    #[Route('/count')]
     public function count(Request $request): JsonResponse
     {
         return new JsonResponse([
-            rand(1, 1000)
+            'counter' => rand(1, 1000),
         ]);
     }
 }

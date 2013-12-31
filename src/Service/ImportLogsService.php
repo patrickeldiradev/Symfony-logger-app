@@ -29,6 +29,11 @@ class ImportLogsService
     private TranslatorInterface $translator;
 
     /**
+     * @var string The read mode for opening the log file.
+     */
+    private const READ_MODE = 'r';
+
+    /**
      * @var array The batch of log entries to process and save.
      */
     private array $batch = [];
@@ -36,7 +41,7 @@ class ImportLogsService
     /**
      * @var string Regular expression pattern to parse each log line.
      */
-    private const LINE_EXPRESSION = '/(\S+) - - \[(.+?)\] "(\S+ \S+ \S+)" (\d+)/';
+    private const LINE_EXPRESSION = '/(\S+) - - \[(.+?)\] "(\S+) (\S+) (\S+)" (\d+)/';
 
     /**
      * @var int The size of each batch to process.
@@ -76,7 +81,7 @@ class ImportLogsService
             return Command::FAILURE;
         }
 
-        $handle = @fopen($logFilePath, 'r');
+        $handle = @fopen($logFilePath, self::READ_MODE);
 
         if ($handle === false) {
             $this->logger->error(
@@ -144,15 +149,19 @@ class ImportLogsService
      */
     private function createLogEntry(string $line, int $lastPosition): LogEntry
     {
+        $line = preg_replace('/^\xEF\xBB\xBF/', '', $line);
+        $line = trim($line);
         $matches = [];
 
         preg_match(self::LINE_EXPRESSION, $line, $matches);
 
         $logEntry = new LogEntry();
-        $logEntry->setServiceName($matches[1] ?? '');
+        $logEntry->setServiceName(trim($matches[1]) ?? '');
         $logEntry->setTimestamp(isset($matches[2]) ? new \DateTime($matches[2]) : new \DateTime());
-        $logEntry->setRequest($matches[3] ?? '');
-        $logEntry->setStatusCode((int)($matches[4] ?? 0));
+        $logEntry->setHttpMethod($matches[3] ?? '');
+        $logEntry->setUri($matches[4] ?? '');
+        $logEntry->setHttpVersion($matches[5] ?? '');
+        $logEntry->setStatusCode($matches[6] ?? null);
         $logEntry->setLinePosition($lastPosition);
 
         return $logEntry;
