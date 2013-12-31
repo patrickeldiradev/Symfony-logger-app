@@ -47,7 +47,7 @@ class LoggerController extends AbstractController
         }
 
         if ($endDate = $request->query->get('endDate')) {
-            $requestTransfer->setStartDate(new DateTime($endDate));
+            $requestTransfer->setEndDate($endDate);
         }
 
         $statusCode = $request->query->getInt('statusCode');
